@@ -34,13 +34,9 @@ def make_win1():
     #layout da primeira tela
     Layout = [
             [sg.Text('Produto Misto')],
-            [sg.Text(
-            ""
-            ,size=(100,None))],
+            [sg.Text("")],
             [sg.Image("")],
-            [sg.Text(
-                ""
-            ,size=(100,None))],
+            [sg.Text("")],
             [sg.Image("")],
             [sg.Button('Proximo'), sg.Button('Sair')]
         ]
@@ -50,7 +46,7 @@ def make_win1():
 def make_win2():
     #layout da segunda janela
     Layout = [
-        [sg.Text("",size=(100,None))],
+        [sg.Text("")],
         [sg.Button("Retornar"),sg.Button("Proximo"),sg.Button("Sair")]
     ]
     return sg.Window('Parte 2', layout= Layout, finalize=True)
