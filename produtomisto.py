@@ -1,5 +1,3 @@
-
-from hashlib import new
 import PySimpleGUI as sg
 #define um tema para a parte visual
 sg.theme("Reddit")
