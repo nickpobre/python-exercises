@@ -1,4 +1,5 @@
 
+from hashlib import new
 import PySimpleGUI as sg
 #define um tema para a parte visual
 sg.theme("Reddit")
@@ -82,14 +83,30 @@ def make_win4():
         [sg.Input(do_not_clear=True,size=(10,1),key='-4-'),sg.Input(do_not_clear=True,size=(10,1),key='-5-'),sg.Input(do_not_clear=True,size=(10,1),key='-6-')],
         [sg.Text("Resultado:"),tela_r],
         [sg.Text("Produto Misto:"),sg.Text(key='-pmr-')],
-        [sg.Button("Calcular",key='-pv-'),sg.Button('Retornar'),sg.Exit("Sair")]
+        [sg.Button("Calcular",key='-pv-'),sg.Button('Retornar'),sg.Button("Proximo"),sg.Exit("Sair")]
     ]
     return sg.Window('Calcular produto vetorial', layout = Layout, finalize=True)
 
-#deifine a janela inicial
-window1, window2 , window3, window4 = make_win1(), None, None, None
+def make_win5():
+    Layout = [
+        [sg.Text("Digite os valores dos vetores abaixo")],
+        [sg.Text("Vetor U:")],
+        [sg.Input(do_not_clear=True,size=(10,1),key='-1-'),sg.Input(do_not_clear=True,size=(10,1),key='-2-'),sg.Input(do_not_clear=True,size=(10,1),key='-3-')],
+        [sg.Text("Vetor V:")],
+        [sg.Input(do_not_clear=True,size=(10,1),key='-4-'),sg.Input(do_not_clear=True,size=(10,1),key='-5-'),sg.Input(do_not_clear=True,size=(10,1),key='-6-')],
+        [sg.Text("Vetor W:")],
+        [sg.Input(do_not_clear=True,size=(10,1),key='-7-'),sg.Input(do_not_clear=True,size=(10,1),key='-8-'),sg.Input(do_not_clear=True,size=(10,1),key='-9-')],
+        [sg.Text("Vetor D:")],
+        [sg.Input(do_not_clear=True,size=(10,1),key='-10-'),sg.Input(do_not_clear=True,size=(10,1),key='-11-'),sg.Input(do_not_clear=True,size=(10,1),key='-12-')],
+        [sg.Text("Resultado:"),tela_r],
+        [sg.Button("Calcular",key='-p4-'),sg.Button('Retornar'),sg.Exit("Sair")]
+    ]
+    return sg.Window("Calcular Tetraedro", layout = Layout, finalize=True)
 
-#loop
+#define a janela inicial
+window1, window2 , window3, window4, window5 = make_win1(), None, None, None, None
+
+#loop para manter o programa sempre aberto ate que um evento de fechar seja chamado
 while True:
 
     window, event, Values = sg.read_all_windows()
@@ -112,11 +129,17 @@ while True:
     elif window == window2 and event == 'Proximo':
         window3 = make_win3()
         window2.hide()
-    
+
+    #Caso esteja na janela 3 e aperta no botão proximo ele esconde a janela 3 e mostra a janela 4
     elif window == window3 and event == 'Proximo':
         window4 = make_win4()
         window3.hide()
-    
+
+    #Caso esteja na janela 5 e aperta no botão proximo ele esconde a janela 5 e mostra a janela 5
+    elif window == window4 and event == 'Proximo':
+        window5 = make_win5()
+        window4.hide()
+
     #Caso esteja na janela 2 e aperte em retornar ele esconde a janela 2 e mostra a janela 1
     if window == window2 and event == 'Retornar':
         window1.un_hide()
@@ -126,9 +149,14 @@ while True:
     if window == window3 and event == 'Retornar':
         window2.un_hide()
         window3.hide()
+    
     if window == window4 and event == 'Retornar':
         window3.un_hide()
         window4.hide()
+    
+    if window == window5 and event == 'Retornar':
+        window4.un_hide()
+        window5.hide()
     
     #caso aperte o botão calcular ele pega os valores e envia para a função produtomisto()
     if event == '-c-':
@@ -166,4 +194,26 @@ while True:
         window['-r-'].update(resultado)
         window['-pmr-'].update(b)
 
+    if event == '-p4-':
+        vet = [
+            int(Values['-1-']),
+            int(Values['-2-']),
+            int(Values['-3-']),
+            int(Values['-4-']),
+            int(Values['-5-']),
+            int(Values['-6-']),
+            int(Values['-7-']),
+            int(Values['-8-']),
+            int(Values['-9-']),
+            int(Values['-10-']),
+            int(Values['-11-']),
+            int(Values['-12-']),
+        ]
+        resultado = produto_vetorial(vet)
+        new_array = []
+        new_array.append(resultado)
+        new_array.append(vet[5:11])
+        a = new_array[0]+new_array[1]
+        b = produtomisto(a)
+        window['-r-'].update(b)
 window.close()
