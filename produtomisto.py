@@ -9,7 +9,12 @@ def produto_vetorial(vetor = []):
     w3 = vetor[2]*vetor[5]
     f = [w1,w2,w3]
     return f
-
+def is_coplanar(a):
+    if a == 0:
+        c = "Os vetores U, V e W são coplanares"
+        return c
+    else:
+        return a
 #Função que calcula o produto misto
 def produtomisto(vetor = []):  
     
@@ -22,13 +27,7 @@ def produtomisto(vetor = []):
     b3 = vetor[5]*vetor[7]*vetor[0]
     #soma dos produtos
     produto = (a1+a2+a3) - (b1+b2+b3)
-    #caso o produto final seja 0 ele informa que é coplanar
-    if produto == 0:
-        c = "Os vetors U,V e W são coplanares"
-        return c
-    #caso não seja coplanar ele retorna o valor do produto final
-    else:
-        return produto
+    return produto
 
 def pm4(vetor = []):
     ab = vetor[3]-vetor[0]
@@ -74,12 +73,10 @@ def make_win3():
         [sg.Input(do_not_clear=True,size=(10,1),key='-1-'),sg.Input(do_not_clear=True,size=(10,1),key='-2-'),sg.Input(do_not_clear=True,size=(10,1),key='-3-')],
         [sg.Text("Vetor V:")],
         [sg.Input(do_not_clear=True,size=(10,1),key='-4-'),sg.Input(do_not_clear=True,size=(10,1),key='-5-'),sg.Input(do_not_clear=True,size=(10,1),key='-6-')],
-        [sg.Text("Vetor W:")],
-        [sg.Input(do_not_clear=True,size=(10,1),key='-7-'),sg.Input(do_not_clear=True,size=(10,1),key='-8-'),sg.Input(do_not_clear=True,size=(10,1),key='-9-')],
         [sg.Text("Resultado:"),tela_r],
-        [sg.Button("Calcular",key='-c-'),sg.Button('Retornar'),sg.Button("Proximo"),sg.Exit("Sair")]
+        [sg.Button("Calcular",key='-pv-'),sg.Button('Retornar'),sg.Button("Proximo"),sg.Exit("Sair")]
     ]
-    return sg.Window('Calcular produto misto', layout = Layout, finalize=True)
+    return sg.Window('Calcular produto vetorial', layout = Layout, finalize=True)
 
 #Cria a janela 4
 def make_win4():
@@ -89,11 +86,14 @@ def make_win4():
         [sg.Input(do_not_clear=True,size=(10,1),key='-1-'),sg.Input(do_not_clear=True,size=(10,1),key='-2-'),sg.Input(do_not_clear=True,size=(10,1),key='-3-')],
         [sg.Text("Vetor V:")],
         [sg.Input(do_not_clear=True,size=(10,1),key='-4-'),sg.Input(do_not_clear=True,size=(10,1),key='-5-'),sg.Input(do_not_clear=True,size=(10,1),key='-6-')],
+        [sg.Text("Vetor W:")],
+        [sg.Input(do_not_clear=True,size=(10,1),key='-7-'),sg.Input(do_not_clear=True,size=(10,1),key='-8-'),sg.Input(do_not_clear=True,size=(10,1),key='-9-')],
         [sg.Text("Resultado:"),tela_r],
-        [sg.Text("Produto Misto:"),sg.Text(key='-pmr-')],
-        [sg.Button("Calcular",key='-pv-'),sg.Button('Retornar'),sg.Button("Proximo"),sg.Exit("Sair")]
+        [sg.Button("Calcular",key='-c-'),sg.Button('Retornar'),sg.Button("Proximo"),sg.Exit("Sair")]
     ]
-    return sg.Window('Calcular produto vetorial', layout = Layout, finalize=True)
+    return sg.Window('Calcular produto misto', layout = Layout, finalize=True)
+
+    
 
 def make_win5():
     Layout = [
@@ -179,7 +179,8 @@ while True:
             int(Values['-8-']),
             int(Values['-9-']),
         ]
-        resultado = produtomisto(vet)
+        resultado = is_coplanar(produtomisto(vet))
+
         #mostra na tela o resultado
         window['-r-'].update(resultado)
     
@@ -194,13 +195,7 @@ while True:
             int(Values['-6-']),
         ]
         resultado = produto_vetorial(vet)
-        new_array = []
-        new_array.append(vet)
-        new_array.append(resultado)
-        a = new_array[0]+new_array[1]
-        b = produtomisto(a)
         window['-r-'].update(resultado)
-        window['-pmr-'].update(b)
 
     if event == '-p4-':
         vet = [
@@ -217,6 +212,7 @@ while True:
             int(Values['-11-']),
             int(Values['-12-']),
         ]
-        resultado = pm4(vet)
+        resultado = is_coplanar(pm4(vet))
         window['-r-'].update(resultado)
+
 window.close()
