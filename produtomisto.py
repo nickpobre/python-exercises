@@ -1,3 +1,4 @@
+from unittest import result
 import PySimpleGUI as sg
 #define um tema para a parte visual
 sg.theme("Reddit")
@@ -29,6 +30,19 @@ def produtomisto(vetor = []):
     else:
         return produto
 
+def pm4(vetor = []):
+    ab = vetor[3]-vetor[0]
+    ab2 = vetor[4]-vetor[1]
+    ab3 = vetor[5]-vetor[2]
+    ac = vetor[6]-vetor[0]
+    ac2 = vetor[7]-vetor[1]
+    ac3 = vetor[8]-vetor[2]
+    ad = vetor[9]-vetor[0]
+    ad2 = vetor[10]-vetor[1]
+    ad3 = vetor[11]-vetor[2]
+    vet = [ab,ab2,ab3,ac,ac2,ac3,ad,ad2,ad3]
+    resultado = produtomisto(vet)
+    return resultado
 #Cria a primeira janela
 def make_win1():
     #layout da primeira tela
@@ -203,11 +217,6 @@ while True:
             int(Values['-11-']),
             int(Values['-12-']),
         ]
-        resultado = produto_vetorial(vet)
-        new_array = []
-        new_array.append(resultado)
-        new_array.append(vet[5:11])
-        a = new_array[0]+new_array[1]
-        b = produtomisto(a)
-        window['-r-'].update(b)
+        resultado = pm4(vet)
+        window['-r-'].update(resultado)
 window.close()
