@@ -15,6 +15,7 @@ def is_coplanar(a):
         return c
     else:
         return a
+
 #Função que calcula o produto misto
 def produtomisto(vetor = []):  
     
