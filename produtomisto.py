@@ -1,4 +1,6 @@
-from unittest import result
+import textwrap
+import webview
+
 import PySimpleGUI as sg
 #define um tema para a parte visual
 sg.theme("Reddit")
@@ -44,23 +46,24 @@ def pm4(vetor = []):
     resultado = produtomisto(vet)
     return resultado
 #Cria a primeira janela
+
 def make_win1():
     #layout da primeira tela
+    
     Layout = [
-            [sg.Text('Produto Misto')],
-            [sg.Text("")],
-            [sg.Image("")],
-            [sg.Text("")],
-            [sg.Image("")],
-            [sg.Button('Proximo'), sg.Button('Sair')]
+            [sg.Image('C:/Users/felly/Documents/GitHub/python-exercises/img-0.png',expand_y=True)],
+            [sg.Button("Proximo"),sg.Button("Sair")],
         ]
+
     return sg.Window('Definição produto misto', layout= Layout, finalize=True)
 
 #cria a janela 2
 def make_win2():
     #layout da segunda janela
     Layout = [
-        [sg.Text("")],
+        [sg.Image('C:/Users/felly/Documents/GitHub/python-exercises/exe1.png',expand_y=True)],
+        [sg.Image('C:/Users/felly/Documents/GitHub/python-exercises/exe2.png',expand_y=True)],
+        [sg.Image('C:/Users/felly/Documents/GitHub/python-exercises/exe3.png',expand_y=True)],
         [sg.Button("Retornar"),sg.Button("Proximo"),sg.Button("Sair")]
     ]
     return sg.Window('Parte 2', layout= Layout, finalize=True)
@@ -113,7 +116,7 @@ def make_win5():
     return sg.Window("Calcular Tetraedro", layout = Layout, finalize=True)
 
 #define a janela inicial
-window1, window2 , window3, window4, window5 = make_win1(), None, None, None, None
+window1,window2 ,window3 ,window4 ,window5 = make_win1(), None, None, None, None
 
 #loop para manter o programa sempre aberto ate que um evento de fechar seja chamado
 while True:
@@ -129,7 +132,7 @@ while True:
         elif window == window1:
             break
 
-    #Caso esteja na janela 1 e aperta no botão proximo ele esconde a janela 1 e mostra a janela 2
+    #Caso esteja na janela 1 e aperta no botão proximo ele esconde a janela 1 e mostra a janela 2  
     elif window == window1 and event == 'Proximo':
         window2 = make_win2()
         window1.hide()
