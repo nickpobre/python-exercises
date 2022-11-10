@@ -1,8 +1,10 @@
 from re import A
 import matplotlib.pyplot as plt
 import PySimpleGUI as sg
+
 #define um tema para a parte visual
 sg.theme("Reddit")
+
 #Função que calcula o produto vetorial
 def produto_vetorial(vetor = []):
     w1 = vetor[0]*vetor[3]
@@ -10,6 +12,7 @@ def produto_vetorial(vetor = []):
     w3 = vetor[2]*vetor[5]
     f = [w1,w2,w3]
     return f
+
 def is_coplanar(a):
     if a == 0:
         c = "Os vetores U, V e W são coplanares"
@@ -19,7 +22,6 @@ def is_coplanar(a):
 
 #Função que calcula o produto misto
 def produtomisto(vetor = []):  
-    
     #multiplicação da matriz
     a1 = vetor[6]*vetor[1]*vetor[5]
     a2 = vetor[0]*vetor[4]*vetor[8]
@@ -33,6 +35,7 @@ def produtomisto(vetor = []):
         return produto * produto
     else:
         return produto
+
 def view_2(vetor = []):
     resultado = produto_vetorial(vetor)
     new_vet = []
@@ -50,6 +53,7 @@ def view_2(vetor = []):
     ax.quiver(start[0],start[1],start[2],aux[6],aux[7],aux[8],color="red")
     ax.view_init(10,10)
     plt.show()
+
 def view(vetor = []):
     fig = plt.figure()
     ax = fig.add_subplot(projection = '3d')
@@ -57,18 +61,19 @@ def view(vetor = []):
     ax.quiver(start[0],start[1],start[2],vetor[0],vetor[1],vetor[2])
     ax.quiver(start[0],start[1],start[2],vetor[3],vetor[4],vetor[5])
     ax.quiver(start[0],start[1],start[2],vetor[6],vetor[7],vetor[8])
-    ax.quiver(vetor[0],vetor[1],vetor[2],vetor[6],vetor[7],vetor[8],color = 'green')
-    ax.quiver(vetor[6],vetor[7],vetor[8],vetor[0],vetor[1],vetor[2],color = 'blue')
-    ax.quiver(vetor[0],vetor[1],vetor[2],vetor[3],vetor[4],vetor[5],color = 'cyan')
-    ax.quiver(vetor[3],vetor[4],vetor[5],vetor[0],vetor[1],vetor[2],color = 'orange')
-    ax.quiver(vetor[3],vetor[4],vetor[5],vetor[6],vetor[7],vetor[8],color = 'red')
-    ax.quiver(vetor[6],vetor[7],vetor[8],vetor[3],vetor[4],vetor[5],color = 'grey')
-    ax.quiver(vetor[6],vetor[7],vetor[8],vetor[3],vetor[4],vetor[5],color = 'yellow')
-    ax.quiver(vetor[6]+vetor[3],vetor[7]+vetor[4],vetor[8]+vetor[5],vetor[0],vetor[1],vetor[2],color = 'purple')
-    ax.quiver(vetor[0]+vetor[6],vetor[1]+vetor[7],vetor[2]+vetor[8],vetor[3],vetor[4],vetor[5],color = 'green')
-    ax.quiver(vetor[0]+vetor[3],vetor[1]+vetor[4],vetor[2]+vetor[5],vetor[6],vetor[7],vetor[8],color = 'cyan')
+    ax.quiver(vetor[0],vetor[1],vetor[2],vetor[6],vetor[7],vetor[8],color = 'red', alpha=.4)
+    ax.quiver(vetor[6],vetor[7],vetor[8],vetor[0],vetor[1],vetor[2],color = 'red', alpha=.4)
+    ax.quiver(vetor[0],vetor[1],vetor[2],vetor[3],vetor[4],vetor[5],color = 'red', alpha=.4)
+    ax.quiver(vetor[3],vetor[4],vetor[5],vetor[0],vetor[1],vetor[2],color = 'red', alpha=.4)
+    ax.quiver(vetor[3],vetor[4],vetor[5],vetor[6],vetor[7],vetor[8],color = 'red', alpha=.4)
+    ax.quiver(vetor[6],vetor[7],vetor[8],vetor[3],vetor[4],vetor[5],color = 'red', alpha=.4)
+    ax.quiver(vetor[6],vetor[7],vetor[8],vetor[3],vetor[4],vetor[5],color = 'red', alpha=.4)
+    ax.quiver(vetor[6]+vetor[3],vetor[7]+vetor[4],vetor[8]+vetor[5],vetor[0],vetor[1],vetor[2],color = 'red', alpha=.4)
+    ax.quiver(vetor[0]+vetor[6],vetor[1]+vetor[7],vetor[2]+vetor[8],vetor[3],vetor[4],vetor[5],color = 'red', alpha=.4)
+    ax.quiver(vetor[0]+vetor[3],vetor[1]+vetor[4],vetor[2]+vetor[5],vetor[6],vetor[7],vetor[8],color = 'red', alpha=.4)
     ax.view_init(10,10)
     plt.show()
+
 def pm4(vetor = []):
     ab = vetor[3]-vetor[0]
     ab2 = vetor[4]-vetor[1]
@@ -132,8 +137,6 @@ def make_win4():
         [sg.Button("Calcular",key='-c-'),sg.Button('Retornar'),sg.Button("Proximo"),sg.Button('Visualizar'),sg.Exit("Sair")]
     ]
     return sg.Window('Calcular produto misto', layout = Layout, finalize=True)
-
-    
 
 def make_win5():
     Layout = [
@@ -260,6 +263,7 @@ while True:
         ]
         resultado = produto_vetorial(vet)
         window['-r-'].update(resultado)
+
     if event == '-p4-':
         vet = [
             int(Values['-1-']),
@@ -281,6 +285,7 @@ while True:
         window['-pm4r-'].update(a)
         window['-v4r-'].update(b)
         window['-r-'].update(resultado)
+
     if event == '-v4-':
         vet = [
             int(Values['-1-']),
