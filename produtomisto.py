@@ -1,6 +1,5 @@
-import textwrap
-import webview
-
+from re import A
+import matplotlib.pyplot as plt
 import PySimpleGUI as sg
 #define um tema para a parte visual
 sg.theme("Reddit")
@@ -30,8 +29,46 @@ def produtomisto(vetor = []):
     b3 = vetor[5]*vetor[7]*vetor[0]
     #soma dos produtos
     produto = (a1+a2+a3) - (b1+b2+b3)
-    return produto
-
+    if produto < 0:
+        return produto * produto
+    else:
+        return produto
+def view_2(vetor = []):
+    resultado = produto_vetorial(vetor)
+    new_vet = []
+    new_vet.append(vet)
+    new_vet.append(resultado)
+    aux = new_vet[0]+new_vet[1]
+    fig = plt.figure()
+    ax = fig.add_subplot(projection = '3d')
+    ax.set_xlim([-1,20])
+    ax.set_ylim([-20,20])
+    ax.set_zlim([0,20])
+    start = [0,0,0]
+    ax.quiver(start[0],start[1],start[2],aux[0],aux[1],aux[2])
+    ax.quiver(start[0],start[1],start[2],aux[3],aux[4],aux[5])
+    ax.quiver(start[0],start[1],start[2],aux[6],aux[7],aux[8],color="red")
+    ax.view_init(10,10)
+    plt.show()
+def view(vetor = []):
+    fig = plt.figure()
+    ax = fig.add_subplot(projection = '3d')
+    start = [0,0,0]
+    ax.quiver(start[0],start[1],start[2],vetor[0],vetor[1],vetor[2])
+    ax.quiver(start[0],start[1],start[2],vetor[3],vetor[4],vetor[5])
+    ax.quiver(start[0],start[1],start[2],vetor[6],vetor[7],vetor[8])
+    ax.quiver(vetor[0],vetor[1],vetor[2],vetor[6],vetor[7],vetor[8],color = 'green')
+    ax.quiver(vetor[6],vetor[7],vetor[8],vetor[0],vetor[1],vetor[2],color = 'blue')
+    ax.quiver(vetor[0],vetor[1],vetor[2],vetor[3],vetor[4],vetor[5],color = 'cyan')
+    ax.quiver(vetor[3],vetor[4],vetor[5],vetor[0],vetor[1],vetor[2],color = 'orange')
+    ax.quiver(vetor[3],vetor[4],vetor[5],vetor[6],vetor[7],vetor[8],color = 'red')
+    ax.quiver(vetor[6],vetor[7],vetor[8],vetor[3],vetor[4],vetor[5],color = 'grey')
+    ax.quiver(vetor[6],vetor[7],vetor[8],vetor[3],vetor[4],vetor[5],color = 'yellow')
+    ax.quiver(vetor[6]+vetor[3],vetor[7]+vetor[4],vetor[8]+vetor[5],vetor[0],vetor[1],vetor[2],color = 'purple')
+    ax.quiver(vetor[0]+vetor[6],vetor[1]+vetor[7],vetor[2]+vetor[8],vetor[3],vetor[4],vetor[5],color = 'green')
+    ax.quiver(vetor[0]+vetor[3],vetor[1]+vetor[4],vetor[2]+vetor[5],vetor[6],vetor[7],vetor[8],color = 'cyan')
+    ax.view_init(10,10)
+    plt.show()
 def pm4(vetor = []):
     ab = vetor[3]-vetor[0]
     ab2 = vetor[4]-vetor[1]
@@ -43,8 +80,7 @@ def pm4(vetor = []):
     ad2 = vetor[10]-vetor[1]
     ad3 = vetor[11]-vetor[2]
     vet = [ab,ab2,ab3,ac,ac2,ac3,ad,ad2,ad3]
-    resultado = produtomisto(vet)
-    return resultado
+    return vet
 #Cria a primeira janela
 
 def make_win1():
@@ -78,7 +114,7 @@ def make_win3():
         [sg.Text("Vetor V:")],
         [sg.Input(do_not_clear=True,size=(10,1),key='-4-'),sg.Input(do_not_clear=True,size=(10,1),key='-5-'),sg.Input(do_not_clear=True,size=(10,1),key='-6-')],
         [sg.Text("Resultado:"),tela_r],
-        [sg.Button("Calcular",key='-pv-'),sg.Button('Retornar'),sg.Button("Proximo"),sg.Exit("Sair")]
+        [sg.Button("Calcular",key='-pv-'),sg.Button('Retornar'),sg.Button("Proximo"),sg.Button('Visualizar',key='-v-'),sg.Exit("Sair")]
     ]
     return sg.Window('Calcular produto vetorial', layout = Layout, finalize=True)
 
@@ -93,7 +129,7 @@ def make_win4():
         [sg.Text("Vetor W:")],
         [sg.Input(do_not_clear=True,size=(10,1),key='-7-'),sg.Input(do_not_clear=True,size=(10,1),key='-8-'),sg.Input(do_not_clear=True,size=(10,1),key='-9-')],
         [sg.Text("Resultado:"),tela_r],
-        [sg.Button("Calcular",key='-c-'),sg.Button('Retornar'),sg.Button("Proximo"),sg.Exit("Sair")]
+        [sg.Button("Calcular",key='-c-'),sg.Button('Retornar'),sg.Button("Proximo"),sg.Button('Visualizar'),sg.Exit("Sair")]
     ]
     return sg.Window('Calcular produto misto', layout = Layout, finalize=True)
 
@@ -111,7 +147,9 @@ def make_win5():
         [sg.Text("Vetor D:")],
         [sg.Input(do_not_clear=True,size=(10,1),key='-10-'),sg.Input(do_not_clear=True,size=(10,1),key='-11-'),sg.Input(do_not_clear=True,size=(10,1),key='-12-')],
         [sg.Text("Resultado:"),tela_r],
-        [sg.Button("Calcular",key='-p4-'),sg.Button('Retornar'),sg.Exit("Sair")]
+        [sg.Text("Produto misto:"),sg.Text("",key='-pm4r-')],
+        [sg.Text("Volume:"),sg.Text("",key='-v4r-')],
+        [sg.Button("Calcular",key='-p4-'),sg.Button('Retornar'),sg.Button("Vizualizar",key='-v4-'),sg.Exit("Sair")]
     ]
     return sg.Window("Calcular Tetraedro", layout = Layout, finalize=True)
 
@@ -187,7 +225,29 @@ while True:
 
         #mostra na tela o resultado
         window['-r-'].update(resultado)
-    
+    if event == 'Visualizar':
+        vet = [
+            int(Values['-1-']),
+            int(Values['-2-']),
+            int(Values['-3-']),
+            int(Values['-4-']),
+            int(Values['-5-']),
+            int(Values['-6-']),
+            int(Values['-7-']),
+            int(Values['-8-']),
+            int(Values['-9-']),
+        ]
+        view(vet)
+    if event == '-v-':
+        vet = [
+            int(Values['-1-']),
+            int(Values['-2-']),
+            int(Values['-3-']),
+            int(Values['-4-']),
+            int(Values['-5-']),
+            int(Values['-6-']),
+        ]
+        view_2(vet)
     #caso aperte o botão calcular ele pega os valores e envia para a função produto_vetorial()
     if event == '-pv-':
         vet = [
@@ -200,7 +260,6 @@ while True:
         ]
         resultado = produto_vetorial(vet)
         window['-r-'].update(resultado)
-
     if event == '-p4-':
         vet = [
             int(Values['-1-']),
@@ -216,7 +275,28 @@ while True:
             int(Values['-11-']),
             int(Values['-12-']),
         ]
-        resultado = is_coplanar(pm4(vet))
+        resultado = pm4(vet)
+        a = produtomisto(resultado)
+        b = a/6
+        window['-pm4r-'].update(a)
+        window['-v4r-'].update(b)
         window['-r-'].update(resultado)
+    if event == '-v4-':
+        vet = [
+            int(Values['-1-']),
+            int(Values['-2-']),
+            int(Values['-3-']),
+            int(Values['-4-']),
+            int(Values['-5-']),
+            int(Values['-6-']),
+            int(Values['-7-']),
+            int(Values['-8-']),
+            int(Values['-9-']),
+            int(Values['-10-']),
+            int(Values['-11-']),
+            int(Values['-12-']),
+        ]
+        resultado = pm4(vet)
+        view(resultado)
 
 window.close()
