@@ -1,4 +1,3 @@
-from re import A
 import matplotlib.pyplot as plt
 import PySimpleGUI as sg
 
