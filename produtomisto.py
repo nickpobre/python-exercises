@@ -92,7 +92,7 @@ def make_win1():
     #layout da primeira tela
     
     Layout = [
-            [sg.Image('C:/Users/felly/Documents/GitHub/python-exercises/img-0.png',expand_y=True)],
+            [sg.Image('PATH/TO/IMAGE',expand_y=True)],
             [sg.Button("Proximo"),sg.Button("Sair")],
         ]
 
@@ -102,9 +102,9 @@ def make_win1():
 def make_win2():
     #layout da segunda janela
     Layout = [
-        [sg.Image('C:/Users/felly/Documents/GitHub/python-exercises/exe1.png',expand_y=True)],
-        [sg.Image('C:/Users/felly/Documents/GitHub/python-exercises/exe2.png',expand_y=True)],
-        [sg.Image('C:/Users/felly/Documents/GitHub/python-exercises/exe3.png',expand_y=True)],
+        [sg.Image('PATH/TO/IMAGE',expand_y=True)],
+        [sg.Image('PATH/TO/IMAGE',expand_y=True)],
+        [sg.Image('PATH/TO/IMAGE',expand_y=True)],
         [sg.Button("Retornar"),sg.Button("Proximo"),sg.Button("Sair")]
     ]
     return sg.Window('Parte 2', layout= Layout, finalize=True)
